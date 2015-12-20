@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MascotOnNotification</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">MascotOnNotification Settings</string>
+
+    <string name="notification_enabled_key">notification_enabled</string>
+    <string name="notification_enabled_title">Notification enabled</string>
+    <string name="notification_enabled_summary"></string>
 </resources>
