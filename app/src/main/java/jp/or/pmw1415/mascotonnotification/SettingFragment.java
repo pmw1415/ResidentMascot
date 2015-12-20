@@ -1,6 +1,8 @@
 package jp.or.pmw1415.mascotonnotification;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -40,6 +42,8 @@ public class SettingFragment extends PreferenceFragment
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean nowSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
+
+		showNotification(mContext, nowSettingEnabled);
 	}
 
 	@Override
@@ -50,5 +54,28 @@ public class SettingFragment extends PreferenceFragment
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		return true;
+	}
+
+	/**
+	 * Notification表示/非表示
+	 *
+	 * @param context
+	 * @param enabled
+	 */
+	private void showNotification(Context context, boolean enabled) {
+		Intent intent = new Intent();
+		intent.setClassName(mContext.getPackageName(),  SettingActivity.class.getName());
+		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		NotificationParam param = new NotificationParam(
+				mContext,
+				mContext.getString(R.string.app_name),
+				"",
+				R.mipmap.ic_launcher ,R.mipmap.ic_launcher,
+				true, false, pendingIntent
+		);
+
+		NotificationController notificationController = new NotificationController(context);
+		notificationController.setNotification(enabled, param);
 	}
 }
