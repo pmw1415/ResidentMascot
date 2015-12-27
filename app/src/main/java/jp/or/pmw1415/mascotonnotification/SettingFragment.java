@@ -24,6 +24,7 @@ public class SettingFragment extends PreferenceFragment
 	private boolean mBeforeSettingEnabled;
 
 	private String[] mListPrefIconType;
+	private String[] mListTextIconType;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,15 +41,17 @@ public class SettingFragment extends PreferenceFragment
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		mBeforeSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
-		mListPrefIconType = this.getResources().getStringArray(R.array.icon_type);
+		mListPrefIconType = this.getResources().getStringArray(R.array.icon_type_value);
+		mListTextIconType = this.getResources().getStringArray(R.array.icon_type);
 		ListPreference prefIconType = (ListPreference)findPreference(this.getString(R.string.icon_type_key));
 		prefIconType.setOnPreferenceChangeListener(this);
 
-		String iconType = sharedPref.getString(mKeyIconType, mListPrefIconType[0]);
+		String iconTypeValue = sharedPref.getString(mKeyIconType, mListPrefIconType[0]);
 		if (prefIconType.getValue() == null) {
-			prefIconType.setValue(iconType);
+			// 初期値を設定状態にする
+			prefIconType.setValue(iconTypeValue);
 		}
-		prefIconType.setSummary(iconType);
+		prefIconType.setSummary(mListTextIconType[Integer.valueOf(iconTypeValue)]);
 
 	}
 
@@ -71,7 +74,7 @@ public class SettingFragment extends PreferenceFragment
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (preference.getKey().equals(mKeyIconType)) {
 			ListPreference prefIconType = (ListPreference)preference;
-			prefIconType.setSummary((String)newValue);
+			prefIconType.setSummary(mListTextIconType[Integer.valueOf((String)newValue)]);
 		}
 
 		return true;
