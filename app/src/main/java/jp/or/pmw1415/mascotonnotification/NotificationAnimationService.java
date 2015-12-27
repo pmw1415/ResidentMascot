@@ -69,8 +69,8 @@ public class NotificationAnimationService extends Service implements Runnable {
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		NotificationParam param = new NotificationParam(
-				mContext.getString(R.string.app_name),
-				"",
+				mContext.getString(R.string.notification_title_prnm),
+				mContext.getString(R.string.notification_message_prnm),
 				R.mipmap.icon_prnm1, R.mipmap.icon_prnm1_large,
 				true, false, pendingIntent
 		);
