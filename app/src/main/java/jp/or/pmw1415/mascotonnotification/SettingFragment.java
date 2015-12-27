@@ -92,7 +92,7 @@ public class SettingFragment extends PreferenceFragment
 				mContext,
 				mContext.getString(R.string.app_name),
 				"",
-				R.mipmap.ic_launcher ,R.mipmap.ic_launcher,
+				R.mipmap.icon_prnm1 ,R.mipmap.icon_prnm1_large,
 				true, false, pendingIntent
 		);
 
