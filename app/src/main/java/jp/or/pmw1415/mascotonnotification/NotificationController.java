@@ -1,6 +1,7 @@
 package jp.or.pmw1415.mascotonnotification;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -30,7 +31,7 @@ public class NotificationController {
 			builder.setContentText(param.contentText);
 			builder.setSmallIcon(param.smallIcon);
 			builder.setOngoing(param.ongoing);
-			builder.setLargeIcon(param.largeIcon);
+			builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), param.largeIcon));
 			if (param.pendingIntent != null) {
 				builder.setContentIntent(param.pendingIntent);
 			}

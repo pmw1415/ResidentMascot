@@ -84,19 +84,15 @@ public class SettingFragment extends PreferenceFragment
 	 * @param enabled
 	 */
 	private void showNotification(Context context, boolean enabled) {
-		Intent intent = new Intent();
-		intent.setClassName(mContext.getPackageName(),  SettingActivity.class.getName());
-		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		if (enabled) {
+			Intent intent = new Intent();
+			intent.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
+			context.startService(intent);
+		}
+		else {
+			NotificationController notificationController = new NotificationController(context);
+			notificationController.setNotification(false, null);
 
-		NotificationParam param = new NotificationParam(
-				mContext,
-				mContext.getString(R.string.app_name),
-				"",
-				R.mipmap.icon_prnm1 ,R.mipmap.icon_prnm1_large,
-				true, false, pendingIntent
-		);
-
-		NotificationController notificationController = new NotificationController(context);
-		notificationController.setNotification(enabled, param);
+		}
 	}
 }
