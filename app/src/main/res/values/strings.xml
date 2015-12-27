@@ -5,4 +5,7 @@
     <string name="notification_enabled_key">notification_enabled</string>
     <string name="notification_enabled_title">Notification enabled</string>
     <string name="notification_enabled_summary"></string>
+    <string name="icon_type_key">icon_type</string>
+    <string name="icon_type_title">Icon Type</string>
+    <string name="icon_type_summary"></string>
 </resources>

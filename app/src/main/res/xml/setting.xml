@@ -9,6 +9,13 @@
             android:title="@string/notification_enabled_title"
             android:summary="@string/notification_enabled_summary" />
 
+        <ListPreference
+            android:key="@string/icon_type_key"
+            android:title="@string/icon_type_title"
+            android:summary=""
+            android:entries="@array/icon_type"
+            android:entryValues="@array/icon_type_value" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
