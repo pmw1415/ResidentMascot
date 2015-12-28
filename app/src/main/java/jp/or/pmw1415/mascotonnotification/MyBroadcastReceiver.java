@@ -16,6 +16,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		Log.d("MyBroadcastReceiver", "action = " + action);
 
+		if (action.equals(Intent.ACTION_SCREEN_ON)) {
+			// アニメーション表示タイミング調整
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+			}
+		}
+
 		Intent intentService = new Intent();
 		intentService.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
 		context.startService(intentService);
