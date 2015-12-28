@@ -15,14 +15,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
 		Log.d("MyBroadcastReceiver", "action = " + action);
-		if (action.equals(Intent.ACTION_BOOT_COMPLETED) ||
-				action.equals(Intent.ACTION_SCREEN_ON) ||
-				action.equals(Intent.ACTION_TIME_TICK)) {
-			Intent intentService = new Intent();
-			intentService.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
-			context.startService(intentService);
-		}
 
+		Intent intentService = new Intent();
+		intentService.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
+		context.startService(intentService);
 	}
 
 	/**
@@ -48,7 +44,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		try {
 			context.getApplicationContext().unregisterReceiver(this);
 		} catch (IllegalArgumentException e) {
-
 		}
 	}
 }
