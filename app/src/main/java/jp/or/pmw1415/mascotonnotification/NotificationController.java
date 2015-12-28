@@ -1,6 +1,7 @@
 package jp.or.pmw1415.mascotonnotification;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -41,6 +42,22 @@ public class NotificationController {
 		}
 		else {
 			manager.cancel(NotificationBarId);
+		}
+	}
+
+	/**
+	 * Notification表示状態更新
+	 *
+	 * @param enabled
+	 */
+	public void updateNotification(boolean enabled) {
+		if (enabled) {
+			Intent intent = new Intent();
+			intent.setClassName(mContext.getPackageName(), NotificationAnimationService.class.getName());
+			mContext.startService(intent);
+		}
+		else {
+			setNotification(false, null);
 		}
 	}
 }

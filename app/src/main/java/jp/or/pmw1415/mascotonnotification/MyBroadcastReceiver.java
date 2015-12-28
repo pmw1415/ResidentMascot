@@ -18,12 +18,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		Log.d("MyBroadcastReceiver", "action = " + action);
 
+		String keyNotificationEnabled = context.getString((R.string.notification_enabled_key));
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		boolean enabled = sharedPref.getBoolean(keyNotificationEnabled, false);
+
 		if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 			// システム起動完了時に有効設定時、レシーバを登録
-			String keyNotificationEnabled = context.getString((R.string.notification_enabled_key));
-			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-			boolean enabled = sharedPref.getBoolean(keyNotificationEnabled, false);
-
 			updateReceiver(context, enabled);
 		}
 		if (action.equals(Intent.ACTION_SCREEN_ON)) {
@@ -34,9 +34,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 			}
 		}
 
-		Intent intentService = new Intent();
-		intentService.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
-		context.startService(intentService);
+		NotificationController notificationController = new NotificationController(context);
+		notificationController.updateNotification(enabled);
 	}
 
 	/**

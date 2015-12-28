@@ -2,7 +2,6 @@ package jp.or.pmw1415.mascotonnotification;
 
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -89,16 +88,8 @@ public class SettingFragment extends PreferenceFragment
 	 * @param enabled
 	 */
 	private void showNotification(Context context, boolean enabled) {
-		if (enabled) {
-			Intent intent = new Intent();
-			intent.setClassName(context.getPackageName(), NotificationAnimationService.class.getName());
-			context.startService(intent);
-		}
-		else {
-			NotificationController notificationController = new NotificationController(context);
-			notificationController.setNotification(false, null);
-
-		}
+		NotificationController notificationController = new NotificationController(context);
+		notificationController.updateNotification(enabled);
 	}
 
 	/**
