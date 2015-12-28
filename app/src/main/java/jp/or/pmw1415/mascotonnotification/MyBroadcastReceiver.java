@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -16,6 +18,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		Log.d("MyBroadcastReceiver", "action = " + action);
 
+		if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+			// システム起動完了時に有効設定時、レシーバを登録
+			String keyNotificationEnabled = context.getString((R.string.notification_enabled_key));
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+			boolean enabled = sharedPref.getBoolean(keyNotificationEnabled, false);
+
+			updateReceiver(context, enabled);
+		}
 		if (action.equals(Intent.ACTION_SCREEN_ON)) {
 			// アニメーション表示タイミング調整
 			try {
@@ -36,7 +46,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	 *
 	 * @param context
 	 */
-	public void register(Context context) {
+	private void register(Context context) {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_TIME_TICK);
 		filter.addAction(Intent.ACTION_SCREEN_ON);
@@ -48,10 +58,26 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	 *
 	 * @param context
 	 */
-	public void unregister(Context context) {
+	private void unregister(Context context) {
 		try {
 			context.getApplicationContext().unregisterReceiver(this);
 		} catch (IllegalArgumentException e) {
+		}
+	}
+
+	/**
+	 * レシーバ登録状態更新
+	 *
+	 * 登録済みの状態で登録すると古いものが残り重複してしまうため、
+	 * 登録解除は毎回行う(未登録時はIllegalArgumentExceptionが発生)
+	 *
+	 * @param context
+	 * @param enabled
+	 */
+	public void updateReceiver(Context context, boolean enabled) {
+		unregister(context);
+		if (enabled) {
+			register(context);
 		}
 	}
 }

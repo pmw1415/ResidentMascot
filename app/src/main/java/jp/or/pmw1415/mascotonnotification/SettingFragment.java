@@ -62,6 +62,8 @@ public class SettingFragment extends PreferenceFragment
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean nowSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
+		updateReceiver(mContext, nowSettingEnabled);
+
 		showNotification(mContext, nowSettingEnabled);
 	}
 
@@ -97,5 +99,16 @@ public class SettingFragment extends PreferenceFragment
 			notificationController.setNotification(false, null);
 
 		}
+	}
+
+	/**
+	 * レシーバ登録状態更新
+	 *
+	 * @param context
+	 * @param enabled
+	 */
+	private void updateReceiver(Context context, boolean enabled) {
+		MyBroadcastReceiver receiver = new MyBroadcastReceiver();
+		receiver.updateReceiver(context, enabled);
 	}
 }

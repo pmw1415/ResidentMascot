@@ -33,8 +33,6 @@ public class NotificationAnimationService extends Service implements Runnable {
 		mContext = this;
 		mCondition = new ConditionVariable(false);
 
-		setReceiver(this);
-
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -97,26 +95,5 @@ public class NotificationAnimationService extends Service implements Runnable {
 
 		// サービス終了
 		NotificationAnimationService.this.stopSelf();
-	}
-
-	/**
-	 * レシーバ登録
-	 *
-	 * manifestで登録できないアクションがあるため、有効化/無効化するタイミングで
-	 * レシーバの登録/登録解除を行う。
-	 *
-	 * @param context
-	 */
-	private void setReceiver(Context context) {
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		boolean enabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
-
-		MyBroadcastReceiver receiver = new MyBroadcastReceiver();
-		if (enabled) {
-			receiver.register(context);
-		}
-		else {
-			receiver.unregister(context);
-		}
 	}
 }
