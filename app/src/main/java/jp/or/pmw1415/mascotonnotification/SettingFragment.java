@@ -1,6 +1,5 @@
 package jp.or.pmw1415.mascotonnotification;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,8 +19,6 @@ public class SettingFragment extends PreferenceFragment
 	private String mKeyNotificationEnabled;
 	private String mKeyIconType;
 
-	private boolean mBeforeSettingEnabled;
-
 	private String[] mListPrefIconType;
 	private String[] mListTextIconType;
 
@@ -38,7 +35,6 @@ public class SettingFragment extends PreferenceFragment
 		prefEnabled.setOnPreferenceChangeListener(this);
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-		mBeforeSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
 		mListPrefIconType = this.getResources().getStringArray(R.array.icon_type_value);
 		mListTextIconType = this.getResources().getStringArray(R.array.icon_type);
@@ -61,8 +57,10 @@ public class SettingFragment extends PreferenceFragment
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean nowSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
+		// レシーバ登録状態更新
 		updateReceiver(mContext, nowSettingEnabled);
 
+		// Notification表示/非表示
 		showNotification(mContext, nowSettingEnabled);
 	}
 
