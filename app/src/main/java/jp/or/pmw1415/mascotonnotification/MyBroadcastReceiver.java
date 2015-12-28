@@ -45,6 +45,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	 * @param context
 	 */
 	public void unregister(Context context) {
-		context.getApplicationContext().unregisterReceiver(this);
+		try {
+			context.getApplicationContext().unregisterReceiver(this);
+		} catch (IllegalArgumentException e) {
+
+		}
 	}
 }
