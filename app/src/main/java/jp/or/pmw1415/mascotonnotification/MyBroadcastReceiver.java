@@ -12,6 +12,7 @@ import android.util.Log;
  * Created by pmw1415 on 2015/12/27.
  */
 public class MyBroadcastReceiver extends BroadcastReceiver {
+	private static final String TAG = MyBroadcastReceiver.class.getSimpleName();
 	private static MyBroadcastReceiver instance = new MyBroadcastReceiver();
 
 	private MyBroadcastReceiver() {
@@ -25,7 +26,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
-		Log.d("MyBroadcastReceiver", "action = " + action);
+		Log.d(TAG, "action = " + action);
 
 		String keyNotificationEnabled = context.getString((R.string.notification_enabled_key));
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
