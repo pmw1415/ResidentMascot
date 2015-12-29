@@ -12,6 +12,15 @@ import android.util.Log;
  * Created by pmw1415 on 2015/12/27.
  */
 public class MyBroadcastReceiver extends BroadcastReceiver {
+	private static MyBroadcastReceiver instance = new MyBroadcastReceiver();
+
+	private MyBroadcastReceiver() {
+
+	}
+
+	public static MyBroadcastReceiver getInstance() {
+		return instance;
+	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
