@@ -97,7 +97,7 @@ public class SettingFragment extends PreferenceFragment
 	 * @param enabled
 	 */
 	private void updateReceiver(Context context, boolean enabled) {
-		MyBroadcastReceiver receiver = new MyBroadcastReceiver();
+		MyBroadcastReceiver receiver = MyBroadcastReceiver.getInstance();
 		receiver.updateReceiver(context, enabled);
 	}
 }
