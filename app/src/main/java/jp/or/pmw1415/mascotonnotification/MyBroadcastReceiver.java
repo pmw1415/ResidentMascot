@@ -14,9 +14,10 @@ import android.util.Log;
 public class MyBroadcastReceiver extends BroadcastReceiver {
 	private static final String TAG = MyBroadcastReceiver.class.getSimpleName();
 	private static MyBroadcastReceiver instance = new MyBroadcastReceiver();
+	private boolean isScreenOn;
 
 	private MyBroadcastReceiver() {
-
+		isScreenOn = true;
 	}
 
 	public static MyBroadcastReceiver getInstance() {
@@ -37,15 +38,22 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 			updateReceiver(context, enabled);
 		}
 		if (action.equals(Intent.ACTION_SCREEN_ON)) {
+			isScreenOn = true;
 			// アニメーション表示タイミング調整
 			try {
 				Thread.sleep(300);
 			} catch (InterruptedException e) {
 			}
 		}
+		if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+			isScreenOn = false;
+		}
 
-		NotificationController notificationController = new NotificationController(context);
-		notificationController.updateNotification(enabled);
+		if (isScreenOn) {
+			Log.d(TAG, "updateNotification");
+			NotificationController notificationController = new NotificationController(context);
+			notificationController.updateNotification(enabled);
+		}
 	}
 
 	/**
@@ -59,6 +67,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_TIME_TICK);
 		filter.addAction(Intent.ACTION_SCREEN_ON);
+		filter.addAction(Intent.ACTION_SCREEN_OFF);
 		context.getApplicationContext().registerReceiver(this, filter);
 	}
 
