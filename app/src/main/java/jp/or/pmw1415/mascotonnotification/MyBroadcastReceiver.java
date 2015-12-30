@@ -13,15 +13,10 @@ import android.util.Log;
  */
 public class MyBroadcastReceiver extends BroadcastReceiver {
 	private static final String TAG = MyBroadcastReceiver.class.getSimpleName();
-	private static MyBroadcastReceiver instance = new MyBroadcastReceiver();
 	private boolean isScreenOn;
 
-	private MyBroadcastReceiver() {
+	public MyBroadcastReceiver() {
 		isScreenOn = true;
-	}
-
-	public static MyBroadcastReceiver getInstance() {
-		return instance;
 	}
 
 	@Override
@@ -34,8 +29,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		boolean enabled = sharedPref.getBoolean(keyNotificationEnabled, false);
 
 		if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-			// システム起動完了時に有効設定時、レシーバを登録
-			updateReceiver(context, enabled);
+			// システム起動完了時に有効設定時、常駐ON
+			Intent intentService = new Intent();
+			intentService.setClassName(context.getPackageName(), ResidentService.class.getName());
+			context.startService(intentService);
 		}
 		if (action.equals(Intent.ACTION_SCREEN_ON)) {
 			isScreenOn = true;

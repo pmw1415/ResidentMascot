@@ -1,6 +1,7 @@
 package jp.or.pmw1415.mascotonnotification;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -57,8 +58,8 @@ public class SettingFragment extends PreferenceFragment
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean nowSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
-		// レシーバ登録状態更新
-		updateReceiver(mContext, nowSettingEnabled);
+		// 常駐設定更新
+		updateResident(mContext, nowSettingEnabled);
 
 		// Notification表示/非表示
 		showNotification(mContext, nowSettingEnabled);
@@ -91,13 +92,19 @@ public class SettingFragment extends PreferenceFragment
 	}
 
 	/**
-	 * レシーバ登録状態更新
+	 * 常駐設定更新
 	 *
 	 * @param context
 	 * @param enabled
 	 */
-	private void updateReceiver(Context context, boolean enabled) {
-		MyBroadcastReceiver receiver = MyBroadcastReceiver.getInstance();
-		receiver.updateReceiver(context, enabled);
+	private void updateResident(Context context, boolean enabled) {
+		Intent intent = new Intent();
+		intent.setClassName(context.getPackageName(), ResidentService.class.getName());
+		if (enabled) {
+			context.startService(intent);
+		}
+		else {
+			context.stopService(intent);
+		}
 	}
 }
