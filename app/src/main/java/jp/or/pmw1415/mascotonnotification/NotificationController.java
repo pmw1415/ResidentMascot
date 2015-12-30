@@ -33,6 +33,7 @@ public class NotificationController {
 			builder.setSmallIcon(param.smallIcon);
 			builder.setOngoing(param.ongoing);
 			builder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), param.largeIcon));
+			builder.setColor(param.color);
 			if (param.pendingIntent != null) {
 				builder.setContentIntent(param.pendingIntent);
 			}

@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -72,6 +73,7 @@ public class NotificationAnimationService extends Service implements Runnable {
 				mContext.getString(R.string.notification_title_prnm),
 				mContext.getString(R.string.notification_message_prnm),
 				R.mipmap.icon_prnm1, R.mipmap.icon_prnm1_large,
+				Color.rgb(0x7c, 0x00, 0x14),
 				true, false, pendingIntent
 		);
 
