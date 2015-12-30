@@ -1,4 +1,4 @@
-package jp.or.pmw1415.mascotonnotification;
+package jp.or.pmw1415.residentmascot;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,7 +24,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		String action = intent.getAction();
 		Log.d(TAG, "action = " + action);
 
-		String keyNotificationEnabled = context.getString((R.string.notification_enabled_key));
+		String keyNotificationEnabled = context.getString(R.string.notification_enabled_key);
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		boolean enabled = sharedPref.getBoolean(keyNotificationEnabled, false);
 

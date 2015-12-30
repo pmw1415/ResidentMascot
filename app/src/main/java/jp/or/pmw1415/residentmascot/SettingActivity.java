@@ -1,4 +1,4 @@
-package jp.or.pmw1415.mascotonnotification;
+package jp.or.pmw1415.residentmascot;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package jp.or.pmw1415.mascotonnotification;
+package jp.or.pmw1415.residentmascot;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -29,7 +29,7 @@ public class NotificationAnimationService extends Service implements Runnable {
 	public void onCreate() {
 		super.onCreate();
 
-		mKeyNotificationEnabled = this.getString((R.string.notification_enabled_key));
+		mKeyNotificationEnabled = this.getString(R.string.notification_enabled_key);
 
 		mContext = this;
 		mCondition = new ConditionVariable(false);
