@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationManagerCompat;
  * Created by pmw1415 on 2015/11/21.
  */
 public class NotificationController {
-	private static final int NotificationBarId = 1415;
+	private static final int NotificationBarId = R.string.notification_id;
 	private Context mContext;
 
 	public NotificationController(Context context) {
