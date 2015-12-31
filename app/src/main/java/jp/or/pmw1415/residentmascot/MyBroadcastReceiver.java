@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 /**
  * Created by pmw1415 on 2015/12/27.
@@ -22,7 +21,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
-		Log.d(TAG, "action = " + action);
+		DebugLogger.output(TAG, "action = " + action);
 
 		String keyNotificationEnabled = context.getString(R.string.notification_enabled_key);
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -47,7 +46,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 		}
 
 		if (isScreenOn) {
-			Log.d(TAG, "updateNotification");
+			DebugLogger.output(TAG, "update notification");
 			NotificationController notificationController = new NotificationController(context);
 			notificationController.updateNotification(enabled);
 		}
