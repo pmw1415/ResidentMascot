@@ -1,4 +1,4 @@
-package jp.or.pmw1415.mascotonnotification;
+package jp.or.pmw1415.residentmascot;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +29,7 @@ public class SettingFragment extends PreferenceFragment
 		addPreferencesFromResource(R.xml.setting);
 
 		mContext = this.getActivity();
-		mKeyNotificationEnabled = this.getString((R.string.notification_enabled_key));
+		mKeyNotificationEnabled = this.getString(R.string.notification_enabled_key);
 		mKeyIconType = this.getString(R.string.icon_type_key);
 
 		CheckBoxPreference prefEnabled = (CheckBoxPreference)findPreference(mKeyNotificationEnabled);
