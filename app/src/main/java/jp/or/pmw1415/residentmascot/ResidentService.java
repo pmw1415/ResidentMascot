@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 /**
  * Created by pmw1415 on 2015/12/30.
@@ -17,7 +16,7 @@ public class ResidentService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.d(getClass().getSimpleName(), "onCreate(): register receiver");
+		DebugLogger.output(getClass().getSimpleName(), "onCreate(): register receiver");
 		mContext = this;
 		mReceiver = new MyBroadcastReceiver();
 
@@ -30,7 +29,7 @@ public class ResidentService extends Service {
 
 	@Override
 	public void onDestroy() {
-		Log.d(getClass().getSimpleName(), "onDestroy(): unregister receiver");
+		DebugLogger.output(getClass().getSimpleName(), "onDestroy(): unregister receiver");
 		// レシーバ登録解除
 		mReceiver.updateReceiver(mContext, false);
 	}
