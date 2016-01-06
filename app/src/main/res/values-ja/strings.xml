@@ -9,4 +9,5 @@
 
     <string name="notification_title_prnm">常駐型プロ生ちゃん</string>
     <string name="notification_message_prnm"></string>
+    <string name="notification_message_low_battery_prnm">バッテリーが少ないよ!!</string>
 </resources>

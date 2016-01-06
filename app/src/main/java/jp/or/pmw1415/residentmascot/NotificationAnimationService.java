@@ -21,6 +21,7 @@ public class NotificationAnimationService extends Service implements Runnable {
 	private static final int AnimationBlinkInterval = 300;
 
 	private String mKeyNotificationEnabled;
+	private String mKeyLowBatteryFlag;
 
 	private Context mContext;
 	private ConditionVariable mCondition;
@@ -30,6 +31,7 @@ public class NotificationAnimationService extends Service implements Runnable {
 		super.onCreate();
 
 		mKeyNotificationEnabled = this.getString(R.string.notification_enabled_key);
+		mKeyLowBatteryFlag = this.getString(R.string.low_battery_flag_key);
 
 		mContext = this;
 		mCondition = new ConditionVariable(false);
@@ -65,6 +67,9 @@ public class NotificationAnimationService extends Service implements Runnable {
 
 	@Override
 	public void run() {
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		boolean isLowBattery = sharedPref.getBoolean(mKeyLowBatteryFlag, false);
+
 		Intent intent = new Intent();
 		intent.setClassName(mContext.getPackageName(),  SettingActivity.class.getName());
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -77,23 +82,31 @@ public class NotificationAnimationService extends Service implements Runnable {
 				true, false, pendingIntent
 		);
 
-		for (int i = 0; i < AnimationBlinkNum; i++) {
-			param.smallIcon = R.mipmap.icon_prnm2;
-			param.largeIcon = R.mipmap.icon_prnm2_large;
+		if (isLowBattery) {
+			param.smallIcon = R.mipmap.icon_prnm4;
+			param.largeIcon = R.mipmap.icon_prnm4_large;
+			param.contentText = mContext.getString(R.string.notification_message_low_battery_prnm);
 			showNotification(mContext, param);
-			if (mCondition.block(AnimationBlinkInterval)) {
-				break;
-			}
-			param.smallIcon = R.mipmap.icon_prnm3;
-			param.largeIcon = R.mipmap.icon_prnm3_large;
-			showNotification(mContext, param);
-			if (mCondition.block(AnimationBlinkInterval)) {
-				break;
-			}
 		}
-		param.smallIcon = R.mipmap.icon_prnm1;
-		param.largeIcon = R.mipmap.icon_prnm1_large;
-		showNotification(mContext, param);
+		else {
+			for (int i = 0; i < AnimationBlinkNum; i++) {
+				param.smallIcon = R.mipmap.icon_prnm2;
+				param.largeIcon = R.mipmap.icon_prnm2_large;
+				showNotification(mContext, param);
+				if (mCondition.block(AnimationBlinkInterval)) {
+					break;
+				}
+				param.smallIcon = R.mipmap.icon_prnm3;
+				param.largeIcon = R.mipmap.icon_prnm3_large;
+				showNotification(mContext, param);
+				if (mCondition.block(AnimationBlinkInterval)) {
+					break;
+				}
+			}
+			param.smallIcon = R.mipmap.icon_prnm1;
+			param.largeIcon = R.mipmap.icon_prnm1_large;
+			showNotification(mContext, param);
+		}
 
 		// サービス終了
 		NotificationAnimationService.this.stopSelf();
