@@ -37,7 +37,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 			isScreenOn = true;
 			// アニメーション表示タイミング調整
 			try {
-				Thread.sleep(300);
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 			}
 		}
