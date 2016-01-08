@@ -3,6 +3,8 @@ package jp.or.pmw1415.residentmascot;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -49,6 +51,10 @@ public class SettingFragment extends PreferenceFragment
 		}
 		prefIconType.setSummary(mListTextIconType[Integer.valueOf(iconTypeValue)]);
 
+		String keyVersionName = this.getString(R.string.version_name_key);
+		Preference prefVersion = (Preference)findPreference(keyVersionName);
+		prefVersion.setSummary(getVersionName(mContext));
+
 	}
 
 	@Override
@@ -78,6 +84,25 @@ public class SettingFragment extends PreferenceFragment
 		}
 
 		return true;
+	}
+
+	/**
+	 * アプリのバージョン名取得
+	 *
+	 * @param context
+	 * @return バージョン名
+	 */
+	private String getVersionName(Context context) {
+		PackageManager pm = context.getPackageManager();
+		String versionName = "";
+		try {
+			PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
+			versionName = packageInfo.versionName;
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return versionName;
 	}
 
 	/**

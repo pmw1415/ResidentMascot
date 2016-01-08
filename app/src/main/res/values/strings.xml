@@ -10,7 +10,12 @@
     <string name="icon_type_key">icon_type</string>
     <string name="icon_type_title">Icon Type</string>
     <string name="icon_type_summary"></string>
+    <string name="version_name_key">version_name</string>
+    <string name="version_name_title">Version</string>
+
+    <string name="low_battery_flag_key">low_battery_flag</string>
 
     <string name="notification_title_prnm">resident pronama</string>
     <string name="notification_message_prnm"></string>
+    <string name="notification_message_low_battery_prnm">low battery!!</string>
 </resources>
