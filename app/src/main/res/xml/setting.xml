@@ -16,6 +16,10 @@
             android:entries="@array/icon_type"
             android:entryValues="@array/icon_type_value" />
 
+        <Preference
+            android:key="@string/version_name_key"
+            android:title="@string/version_name_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
