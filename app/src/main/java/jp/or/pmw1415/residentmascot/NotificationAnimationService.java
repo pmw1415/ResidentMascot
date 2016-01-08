@@ -4,8 +4,10 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.BatteryManager;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -15,6 +17,7 @@ import android.support.annotation.Nullable;
  * Created by pmw1415 on 2015/12/12.
  */
 public class NotificationAnimationService extends Service implements Runnable {
+	private static final String TAG = NotificationAnimationService.class.getSimpleName();
 	// アニメーションの点滅回数
 	private static final int AnimationBlinkNum = 2;
 	// アニメーションの点滅間隔
@@ -68,7 +71,7 @@ public class NotificationAnimationService extends Service implements Runnable {
 	@Override
 	public void run() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
-		boolean isLowBattery = sharedPref.getBoolean(mKeyLowBatteryFlag, false);
+		boolean isLowBattery = sharedPref.getBoolean(mKeyLowBatteryFlag, getLowBatteryFlag());
 
 		Intent intent = new Intent();
 		intent.setClassName(mContext.getPackageName(),  SettingActivity.class.getName());
@@ -110,5 +113,27 @@ public class NotificationAnimationService extends Service implements Runnable {
 
 		// サービス終了
 		NotificationAnimationService.this.stopSelf();
+	}
+
+	/**
+	 * バッテリ残量低下フラグ算出
+	 *
+	 * バッテリ残量とシステムリソースから判定。
+	 * 充電中はバッテリ残量に関係なくfalse固定
+	 *
+	 * @return
+	 */
+	public boolean getLowBatteryFlag() {
+		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		Intent intent = mContext.registerReceiver(null, filter);
+		int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+		int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+
+		int resIdLowBatteryWarningLevel = mContext.getResources().getSystem().getIdentifier("config_lowBatteryWarningLevel", "integer", "android");
+		int lowBatteryWarningLevel = mContext.getResources().getInteger(resIdLowBatteryWarningLevel);
+
+		DebugLogger.output(TAG, "status=" + status + "level=" + level + ", warningLevel=" + lowBatteryWarningLevel);
+
+		return (status != BatteryManager.BATTERY_STATUS_CHARGING) && (level <= lowBatteryWarningLevel);
 	}
 }
