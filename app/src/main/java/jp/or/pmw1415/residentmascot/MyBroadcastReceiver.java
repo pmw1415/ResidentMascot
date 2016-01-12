@@ -37,12 +37,23 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 			isScreenOn = true;
 			// アニメーション表示タイミング調整
 			try {
-				Thread.sleep(300);
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 			}
 		}
 		if (action.equals(Intent.ACTION_SCREEN_OFF)) {
 			isScreenOn = false;
+		}
+
+		if (action.equals(Intent.ACTION_BATTERY_LOW) ||
+				action.equals(Intent.ACTION_BATTERY_OKAY) ||
+				action.equals(Intent.ACTION_POWER_CONNECTED)) {
+			String keyLowBatteryFlag = context.getString(R.string.low_battery_flag_key);
+			boolean value = action.equals(Intent.ACTION_BATTERY_LOW);
+
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putBoolean(keyLowBatteryFlag, value);
+			editor.commit();
 		}
 
 		if (isScreenOn) {
