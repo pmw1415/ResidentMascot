@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">常駐型プロ生ちゃん</string>
+    <string name="action_settings">常駐型プロ生ちゃん 設定</string>
+
+    <string name="notification_enabled_title">表示ON</string>
+    <string name="notification_enabled_summary"></string>
+    <string name="icon_type_title">アイコン種類</string>
+    <string name="icon_type_summary"></string>
+
+    <string name="notification_title_prnm">常駐型プロ生ちゃん</string>
+    <string name="notification_message_prnm"></string>
+</resources>

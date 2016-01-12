@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">MascotOnNotification</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">ResidentMascot</string>
+    <string name="action_settings">ResidentMascot Settings</string>
+
+    <string name="notification_id">0</string>
+
+    <string name="notification_enabled_key">notification_enabled</string>
+    <string name="notification_enabled_title">Notification enabled</string>
+    <string name="notification_enabled_summary"></string>
+    <string name="icon_type_key">icon_type</string>
+    <string name="icon_type_title">Icon Type</string>
+    <string name="icon_type_summary"></string>
+
+    <string name="notification_title_prnm">resident pronama</string>
+    <string name="notification_message_prnm"></string>
 </resources>
