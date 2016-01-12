@@ -64,6 +64,9 @@ public class SettingFragment extends PreferenceFragment
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		boolean nowSettingEnabled = sharedPref.getBoolean(mKeyNotificationEnabled, false);
 
+		// バッテリ残量低下フラグ更新
+		updateLowBatteryFlag(mContext);
+
 		// 常駐設定更新
 		updateResident(mContext, nowSettingEnabled);
 
@@ -103,6 +106,16 @@ public class SettingFragment extends PreferenceFragment
 		}
 
 		return versionName;
+	}
+
+	/**
+	 * バッテリ残量低下フラグ更新
+	 *
+	 * @param context
+	 */
+	private void updateLowBatteryFlag(Context context) {
+		MyBatteryManager myBatteryManager = new MyBatteryManager(context);
+		myBatteryManager.updateLowBatteryFlag();
 	}
 
 	/**
