@@ -119,17 +119,6 @@ public class SettingFragment extends PreferenceFragment
 	}
 
 	/**
-	 * Notification表示/非表示
-	 *
-	 * @param context
-	 * @param enabled
-	 */
-	private void showNotification(Context context, boolean enabled) {
-		NotificationController notificationController = new NotificationController(context);
-		notificationController.updateNotification(enabled);
-	}
-
-	/**
 	 * 常駐設定更新
 	 *
 	 * @param context
@@ -144,5 +133,16 @@ public class SettingFragment extends PreferenceFragment
 		else {
 			context.stopService(intent);
 		}
+	}
+
+	/**
+	 * Notification表示/非表示
+	 *
+	 * @param context
+	 * @param enabled
+	 */
+	private void showNotification(Context context, boolean enabled) {
+		NotificationController notificationController = new NotificationController(context);
+		notificationController.updateNotification(enabled);
 	}
 }
