@@ -118,22 +118,10 @@ public class NotificationAnimationService extends Service implements Runnable {
 	/**
 	 * バッテリ残量低下フラグ算出
 	 *
-	 * バッテリ残量とシステムリソースから判定。
-	 * 充電中はバッテリ残量に関係なくfalse固定
-	 *
 	 * @return
 	 */
 	public boolean getLowBatteryFlag() {
-		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		Intent intent = mContext.registerReceiver(null, filter);
-		int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-		int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-
-		int resIdLowBatteryWarningLevel = mContext.getResources().getSystem().getIdentifier("config_lowBatteryWarningLevel", "integer", "android");
-		int lowBatteryWarningLevel = mContext.getResources().getInteger(resIdLowBatteryWarningLevel);
-
-		DebugLogger.output(TAG, "status=" + status + "level=" + level + ", warningLevel=" + lowBatteryWarningLevel);
-
-		return (status != BatteryManager.BATTERY_STATUS_CHARGING) && (level <= lowBatteryWarningLevel);
+		MyBatteryManager myBatteryManager = new MyBatteryManager(mContext);
+		return myBatteryManager.updateLowBatteryFlag();
 	}
 }

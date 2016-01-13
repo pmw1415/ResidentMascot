@@ -29,6 +29,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
 		if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
 			// システム起動完了時に有効設定時、常駐ON
+			// 電源OFF中にバッテリ残量が変わる可能性があるため、バッテリ残量低下フラグを更新
+			MyBatteryManager myBatteryManager = new MyBatteryManager(context);
+			myBatteryManager.updateLowBatteryFlag();
+
 			Intent intentService = new Intent();
 			intentService.setClassName(context.getPackageName(), ResidentService.class.getName());
 			context.startService(intentService);
